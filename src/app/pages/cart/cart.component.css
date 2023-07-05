@@ -1,0 +1,70 @@
+table {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+}
+
+thead tr th {
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0px;
+  line-height: 25px;
+  color: #232323;
+  font-weight: 600;
+  font-family: "Roboto";
+  border: 1px solid #e5e5e5;
+}
+
+tbody tr td {
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 20px;
+  color: #232323;
+  font-weight: 500;
+  font-family: "Poppins";
+}
+
+.centered {
+  text-align: center;
+  vertical-align: middle;
+}
+td {
+  border: 1px solid #e5e5e5;
+}
+
+.no-items {
+  text-align: center;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eeeeee;
+}
+
+.no-items span {
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 60px;
+  text-transform: uppercase;
+  color: #242628;
+  font-weight: 600;
+  font-family: "Poppins";
+}
+.table-buttons button,
+.no-items button {
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-weight: 400;
+  font-family: "Poppins";
+  background-color: #3cb878;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.table-buttons button:first-child {
+  margin-right: 30px;
+}

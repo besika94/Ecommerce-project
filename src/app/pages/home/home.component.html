@@ -1,0 +1,64 @@
+<main>
+  <div class="poster wow fadeInDown" data-wow-duration="2s">
+    <div class="text">
+      <h2>The Best <span style="display: block">Online Store</span></h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <button (click)="onStartShopping()">Start Shopping</button>
+    </div>
+  </div>
+</main>
+
+<section class="best-seller wow fadeInDown" data-wow-duration="2s">
+  <div class="best-seller-text">
+    <h2 class="best-title">Best sellers</h2>
+    <p class="best-sub-title">The best productions from us</p>
+    <p class="best-seller-desc">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+  </div>
+  <div class="best-product">
+    <app-card *ngFor="let data of tempData" [objectForCard]="data"></app-card>
+  </div>
+</section>
+<section class="features">
+  <div>
+    <img src="../../../assets/images/diamond.svg" alt="" />
+    <h2>Special offers</h2>
+    <p>Shop Big Save Big</p>
+  </div>
+  <div>
+    <img src="../../../assets/images/plane2.svg" alt="" />
+    <h2>Free delivery</h2>
+    <p>On Orders Above $99</p>
+  </div>
+  <div>
+    <img src="../../../assets/images/share.svg" alt="" />
+    <h2>30 Days Return</h2>
+    <p>Policy We Offers</p>
+  </div>
+  <div>
+    <img src="../../../assets/images/rocket.svg" alt="" />
+    <h2>Fastest Shipping</h2>
+    <p>2 Days Express</p>
+  </div>
+</section>
+<section class="images wow fadeInDown" data-wow-duration="2s">
+  <div><img src="../../../assets/images/blue-bg.png" alt="" /></div>
+  <div><img src="../../../assets/images/blue-bg-2.png" alt="" /></div>
+  <div><img src="../../../assets/images/blue-bg-3.png" alt="" /></div>
+</section>
+
+<section class="featured wow fadeInDown" data-wow-duration="2s">
+  <h2 class="featured-title">Featured Products</h2>
+  <h5 class="featured-subtitle">Newest trends from top brands</h5>
+  <div class="featured-products">
+    <app-card
+      *ngFor="let featured of featuredProduct"
+      [objectForCard]="featured"
+    ></app-card>
+  </div>
+</section>

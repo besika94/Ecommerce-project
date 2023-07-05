@@ -1,0 +1,8 @@
+<div class="loading-image" *ngIf="!dataArrive"></div>
+<div class="all-content" *ngIf="dataArrive">
+  <app-header></app-header>
+
+  <router-outlet></router-outlet>
+
+  <app-footer></app-footer>
+</div>

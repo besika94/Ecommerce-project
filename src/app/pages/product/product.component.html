@@ -1,0 +1,48 @@
+<div class="wrapper" style="margin-top: 140px">
+  <div class="product" *ngIf="singleProduct !== undefined">
+    <div class="product-slider">
+      <app-slider [slideImages]="singleProduct.images"></app-slider>
+    </div>
+    <div class="product-content" style="padding-left: 50px">
+      <h2 class="list-title">
+        {{ singleProduct.title }}
+      </h2>
+      <p class="list-price">{{ singleProduct.price | currency }}</p>
+      <span class="list-rating">
+        {{ singleProduct.rating }}
+        <ngb-rating
+          style="color: #ff9600"
+          [rate]="singleProduct.rating"
+          [max]="5"
+        ></ngb-rating
+      ></span>
+      <p class="list-description">{{ singleProduct.description }}</p>
+      <span class="list-categories">{{ singleProduct.category }}</span>
+      <div class="amount" style="margin-block: 10px">
+        <div style="border-right: 1px solid #eeeeee" (click)="onAmount('-')">
+          <i class="bi bi-dash-lg" style="cursor: pointer"></i>
+        </div>
+
+        {{ singleProduct.amount }}
+        <div style="border-left: 1px solid #eeeeee" (click)="onAmount('+')">
+          <i class="bi bi-plus-lg" style="cursor: pointer"></i>
+        </div>
+      </div>
+      <div class="list-buttons">
+        <button (click)="onAddCart(singleProduct)">
+          <i class="bi bi-cart-fill"></i>
+          <span style="margin-left: 5px">Add To Cart</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <hr style="margin: 100px 0" />
+  <div
+    class="similar-products"
+    *ngIf="similarProducts.length"
+    style="margin-bottom: 100px"
+  >
+    <p>Similar Products</p>
+    <app-slider [cardSlider]="similarProducts"></app-slider>
+  </div>
+</div>
