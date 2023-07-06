@@ -36,7 +36,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
               "node_modules/wowjs/css/libs/animate.css",
-              "./node_modules/swiper/swiper-bundle.css"
+              "./node_modules/swiper/swiper-bundle.min.css",
+              "./node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
             ],
             "scripts": ["node_modules/wowjs/dist/wow.min.js"]
           },
