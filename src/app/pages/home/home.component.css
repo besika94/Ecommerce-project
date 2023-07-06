@@ -8,7 +8,7 @@ main {
 }
 .poster {
   width: 100%;
-  background-image: url(../../../assets/images/mainPic2.jpg);
+  background-image: url(../../../assets/images/mainPic2.webp);
   background-repeat: no-repeat;
   background-size: cover;
   height: 800px;
