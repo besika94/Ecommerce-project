@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 import { ProductCardModel } from 'src/app/models/productCard.model';
@@ -11,7 +12,22 @@ import { ServiceForHome } from 'src/app/services/home/home.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  constructor(private homeService: ServiceForHome) {}
+  constructor(
+    private homeService: ServiceForHome,
+    activatedRoute: ActivatedRoute
+  ) {
+    activatedRoute.params.subscribe((params) => {
+      if (!this.singleProduct) {
+        this.singleProduct = this.homeService
+          .getAllProductsArray()
+          .find((p) => +params.id === p.id);
+
+        this.similarProducts = this.homeService
+          .getAllProductsArray()
+          .filter((p) => p.category === this.singleProduct?.category);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.singleProductSubscription =

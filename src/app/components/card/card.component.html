@@ -1,7 +1,11 @@
 <!-- to display featured products for home page -->
 <div class="home-card" *ngIf="objectForCard && !list">
   <div class="home-card-img">
-    <img [src]="objectForCard.thumbnail" alt="product image" />
+    <img
+      [src]="objectForCard.thumbnail"
+      alt="{objectForCard.title}"
+      loading="lazy"
+    />
 
     <div class="on-image" (click)="onProduct(objectForCard)">
       <div class="icon-box" (click)="onAddCart(objectForCard, $event)">
@@ -35,7 +39,8 @@
   <div class="list-img">
     <img
       [src]="objectForCard.thumbnail"
-      alt="product image"
+      alt="{objectForCard.title}"
+      loading="lazy"
       (click)="onProduct(objectForCard)"
     />
   </div>
