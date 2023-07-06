@@ -26,6 +26,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/robots.txt",
+              "src/sitemap.xml",
               {
                 "glob": "_redirects",
                 "input": "src",
