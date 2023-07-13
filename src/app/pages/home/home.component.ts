@@ -12,10 +12,10 @@ export class HomeComponent implements OnInit {
   constructor(private homeService: ServiceForHome, private router: Router) {}
 
   ngOnInit(): void {
-    this.homeService.getBestSellers().subscribe((prod: any) => {
+    this.homeService.getBestSellers(4, 1).subscribe((prod: any) => {
       this.tempData = prod.products;
     });
-    this.homeService.getFeatured().subscribe((prod) => {
+    this.homeService.getFeatured(10, 35).subscribe((prod) => {
       this.featuredProduct = prod.products;
     });
   }

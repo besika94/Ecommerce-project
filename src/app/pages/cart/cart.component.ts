@@ -32,7 +32,12 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onContinueShopping() {
-    this.router.navigate(['/all-products']);
+    this.router.navigate(['products/all']);
+  }
+
+  onClearCart() {
+    this.homeService.updateCart.next((this.homeService.cartProducts = []));
+    localStorage.removeItem('inCart');
   }
 
   ngOnDestroy(): void {

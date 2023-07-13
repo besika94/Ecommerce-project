@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Subject } from 'rxjs';
 import {
@@ -36,32 +36,24 @@ export class ServiceForHome {
   }
 
   getProductsByCategory(category: string) {
-    let filteredProducts: Array<ProductCardModel> = [];
     if (category === 'men') {
-      this.getAllProductsArray().filter((product) => {
-        if (
+      return this.getAllProductsArray().filter(
+        (product) =>
           product.category === 'mens-shirts' ||
           product.category === 'mens-shoes' ||
           product.category === 'mens-watches'
-        ) {
-          filteredProducts.push(product);
-        }
-      });
-    } else if (category === 'accessories') {
-      this.getAllProductsArray().filter((product) => {
-        if (product.category === 'sunglasses') {
-          filteredProducts.push(product);
-        }
-      });
-    } else {
-      this.getAllProductsArray().filter((product) => {
-        if (product.category.toLowerCase().includes(category.toLowerCase())) {
-          filteredProducts.push(product);
-        }
-      });
+      );
     }
 
-    return filteredProducts;
+    if (category === 'accessories') {
+      return this.getAllProductsArray().filter(
+        (product) => product.category === 'sunglasses'
+      );
+    }
+
+    return this.getAllProductsArray().filter((product) =>
+      product.category.toLowerCase().includes(category.toLowerCase())
+    );
   }
 
   searchProducts(searchRes: string) {
@@ -71,26 +63,22 @@ export class ServiceForHome {
   }
 
   onDecrease(id: number) {
-    this.cartProducts.map((el) => {
-      if (el.id === id && el.amount > 0) {
-        if (el.amount === 1) {
-          this.cartProducts = this.cartProducts.filter(
-            (item) => item.id !== el.id
-          );
-        } else {
-          el.amount--;
-        }
-      }
-    });
+    const index = this.cartProducts.findIndex((p) => p.id === id);
+
+    if (this.cartProducts[index]?.amount > 1) this.cartProducts[index].amount--;
+
+    if (this.cartProducts[index].amount === 1)
+      this.cartProducts = this.cartProducts.filter((item) => item.id !== id);
+
+    this.storeCartProductLocaly(this.cartProducts);
     this.updateCart.next(this.cartProducts);
   }
 
   onIncrease(id: number) {
-    this.cartProducts.map((el) => {
-      if (el.id === id && el.amount > 0) {
-        el.amount++;
-      }
-    });
+    const index = this.cartProducts.findIndex((p) => p.id === id);
+
+    this.cartProducts[index].amount++;
+    this.storeCartProductLocaly(this.cartProducts);
     this.updateCart.next(this.cartProducts);
   }
 
@@ -100,20 +88,24 @@ export class ServiceForHome {
     // check if object alredy existed
     const itemInCart = items.find((_item) => _item.id === cartObject.id);
 
-    if (itemInCart) {
-      // to use quantity
-      // itemInCart.amount ? (itemInCart.amount += 1) : '';
-
-      this._snackBar.open('Item is alredy in cart', 'ok', {
+    if (itemInCart)
+      return this._snackBar.open('Item is alredy in cart', 'ok', {
         duration: 3000,
       });
-    } else {
-      this.cartProducts.push(cartObject);
-      this._snackBar.open('item successfully added to cart', 'ok', {
-        duration: 2000,
-      });
-    }
+
+    this.cartProducts.push(cartObject);
+    this.storeCartProductLocaly(this.cartProducts);
     this.updateCart.next(this.cartProducts);
+    return this._snackBar.open('item successfully added to cart', 'ok', {
+      duration: 2000,
+    });
+  }
+
+  storeCartProductLocaly(arr: ProductCardModel[]): void {
+    const storedCartProd = localStorage.getItem('inCart');
+    if (storedCartProd) localStorage.removeItem('inCart');
+
+    localStorage.setItem('inCart', JSON.stringify(arr));
   }
 
   onSingleProduct(singleProductObject: ProductCardModel) {
@@ -122,10 +114,13 @@ export class ServiceForHome {
     this.updateSingleProductView.next(this.singleProductView);
   }
 
-  getBestSellers() {
+  getBestSellers(limit: number, skip: number) {
+    const params = new HttpParams().set('limit', limit).set('skip', skip);
+
     return this.http
       .get<productsModel>(
-        'https://dummyjson.com/products/category/womens-dresses?limit=4&skip=1'
+        'https://dummyjson.com/products/category/womens-dresses',
+        { params }
       )
       .pipe(
         map((response) => {
@@ -135,9 +130,11 @@ export class ServiceForHome {
       );
   }
 
-  getFeatured() {
+  getFeatured(limit: number, skip: number) {
+    const params = new HttpParams().set('limit', limit).set('skip', skip);
+
     return this.http
-      .get<productsModel>('https://dummyjson.com/products/?limit=10&skip=35')
+      .get<productsModel>('https://dummyjson.com/products/', { params })
       .pipe(
         map((response) => {
           response.products.forEach((el) => (el.amount = 1));
@@ -146,9 +143,10 @@ export class ServiceForHome {
       );
   }
 
-  getAllProducts() {
+  getAllProducts(limit: number, skip: number) {
+    const params = new HttpParams().set('limit', limit).set('skip', skip);
     return this.http
-      .get<productsModel>('https://dummyjson.com/products/?limit=50&skip=35')
+      .get<productsModel>('https://dummyjson.com/products/', { params })
       .pipe(
         map((response) => {
           response.products.forEach((el) => (el.amount = 1));
