@@ -1,9 +1,40 @@
 <div class="wrapper" style="margin-top: 120px">
+  <div
+    class="product-controls"
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 10px;
+    "
+  >
+    <div class="prod-amount" style="display: flex; align-items: center">
+      <span>Items per page:</span>
+      <ng-select
+        style="width: 60px; margin-left: 10px"
+        [items]="defaultBindingsList"
+        [clearable]="false"
+        [(ngModel)]="selectedAmount"
+      >
+      </ng-select>
+    </div>
+    <div class="prod-sort" style="display: flex; align-items: center">
+      <span>Sort by:</span>
+      <ng-select
+        style="width: 150px; margin-left: 10px"
+        [items]="sortBy"
+        [clearable]="false"
+        [(ngModel)]="selectedSort"
+        (change)="onSortSelect()"
+      >
+      </ng-select>
+    </div>
+  </div>
   <div class="display-products" *ngIf="productsArray.length">
     <app-card
       *ngFor="
         let product of productsArray
-          | paginate : { itemsPerPage: 5, currentPage: page }
+          | paginate : { itemsPerPage: selectedAmount, currentPage: page }
       "
       [objectForCard]="product"
       [list]="'list'"

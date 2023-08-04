@@ -20,6 +20,8 @@ import { SwiperModule } from 'swiper/angular';
 import { SliderComponent } from './components/slider/slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     NgwWowModule,
     NgbModule,
@@ -43,6 +46,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SwiperModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
+    NgSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
