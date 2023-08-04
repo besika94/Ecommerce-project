@@ -33,6 +33,10 @@
   border-right: solid 1px #eeeeee;
 }
 
+.footer-icons i {
+  cursor: pointer;
+}
+
 .footer-info {
   display: flex;
   justify-content: space-between;
