@@ -65,10 +65,10 @@ export class ServiceForHome {
   onDecrease(id: number) {
     const index = this.cartProducts.findIndex((p) => p.id === id);
 
-    if (this.cartProducts[index]?.amount > 1) this.cartProducts[index].amount--;
-
     if (this.cartProducts[index].amount === 1)
       this.cartProducts = this.cartProducts.filter((item) => item.id !== id);
+
+    if (this.cartProducts[index]?.amount > 1) this.cartProducts[index].amount--;
 
     this.storeCartProductLocaly(this.cartProducts);
     this.updateCart.next(this.cartProducts);
@@ -102,9 +102,6 @@ export class ServiceForHome {
   }
 
   storeCartProductLocaly(arr: ProductCardModel[]): void {
-    const storedCartProd = localStorage.getItem('inCart');
-    if (storedCartProd) localStorage.removeItem('inCart');
-
     localStorage.setItem('inCart', JSON.stringify(arr));
   }
 

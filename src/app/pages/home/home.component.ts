@@ -25,6 +25,6 @@ export class HomeComponent implements OnInit {
   featuredProduct: Array<ProductCardModel> | undefined;
 
   onStartShopping() {
-    this.router.navigate(['/all-products']);
+    this.router.navigate(['products/all']);
   }
 }
