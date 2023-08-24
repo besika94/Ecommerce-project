@@ -58,8 +58,14 @@
           {{ itemsNumberIncart }}
         </div>
       </li>
-      <li style="font-size: 20px">
+      <li class="user-actions">
         <i class="bi bi-person-circle"></i>
+        <div class="user-info" style="position: absolute">
+          <ul class="user-dropdown">
+            <li (click)="onUserActions('login')">Login</li>
+            <li class="mt-2" (click)="onUserActions('register')">Register</li>
+          </ul>
+        </div>
       </li>
       <li style="font-size: 20px" class="burger-icon">
         <i class="bi bi-list" (click)="onBurgerMenu()"></i>

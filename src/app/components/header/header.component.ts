@@ -41,6 +41,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.searchedProduct = [];
   }
 
+  onUserActions(type: string) {
+    this.router.navigateByUrl(`/account/${type}`);
+  }
+
   onBurgerMenu() {
     document.querySelector('.mobile-menu')?.classList.add('show');
   }

@@ -21,7 +21,10 @@ import { SliderComponent } from './components/slider/slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthComponent } from './pages/auth/auth.component';
+import { TextInputComponent } from './components/forms/text-input/text-input.component';
+import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -34,11 +37,15 @@ import { FormsModule } from '@angular/forms';
     ProductsComponent,
     ProductComponent,
     SliderComponent,
+    AuthComponent,
+    TextInputComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     NgwWowModule,
     NgbModule,

@@ -1,0 +1,40 @@
+<div class="wrapper" style="margin-top: 120px; padding-block: 50px">
+  <app-register-form *ngIf="!displayLoginForm"></app-register-form>
+
+  <div class="form-group" *ngIf="displayLoginForm">
+    <h2 class="text-center mb-0">Sign in</h2>
+    <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+      <label for="email" class="mt-2">Email:</label>
+      <input
+        id="email"
+        name="email"
+        [(ngModel)]="model.email"
+        class="form-control me-2"
+        type="text"
+        placeholder="Email"
+      />
+      <label for="password" class="mt-2">Password:</label>
+      <input
+        id="password"
+        name="password"
+        [(ngModel)]="model.password"
+        class="form-control me-2"
+        type="password"
+        placeholder="Password"
+      />
+      <div class="text-end mt-3">
+        <button class="btn btn-primary me-2" type="submit">Sign in</button>
+      </div>
+    </form>
+  </div>
+  <div class="text-center switch-mode-text">
+    <span
+      (click)="
+        switchFromText(
+          switchText === 'Register' ? '/account/register' : '/account/login'
+        )
+      "
+      >Switch to {{ switchText }}</span
+    >
+  </div>
+</div>

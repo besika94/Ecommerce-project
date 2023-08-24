@@ -114,6 +114,43 @@ nav ul li:hover {
   cursor: pointer;
 }
 
+.user-actions {
+  font-size: 20px;
+  position: relative;
+}
+
+.user-actions:hover .user-info {
+  display: flex;
+}
+
+.user-info {
+  display: none;
+  position: absolute;
+  background: white;
+  right: -40px;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 1px grey;
+  /* top: 30px; */
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 3px;
+}
+
+.user-info .user-dropdown {
+  display: block;
+}
+
+.user-info .user-dropdown li {
+  font-size: 0.9rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.user-info .user-dropdown li:hover {
+  transform: scale(1.05);
+}
+
 .burger-icon {
   display: none;
 }

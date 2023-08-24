@@ -1,0 +1,12 @@
+.form-group {
+  max-width: 400px;
+  margin: 40px auto;
+  box-shadow: 0 0 2px grey;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.switch-mode-text span {
+  text-decoration: underline;
+  cursor: pointer;
+}

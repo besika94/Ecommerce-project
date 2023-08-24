@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Subject } from 'rxjs';
+import { map, of, Subject } from 'rxjs';
 import {
   ProductCardModel,
   productsModel,
