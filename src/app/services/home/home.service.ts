@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, of, Subject } from 'rxjs';
+import { map, Observable, of, Subject, tap } from 'rxjs';
 import {
   ProductCardModel,
   productsModel,
 } from 'src/app/models/productCard.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -115,10 +116,9 @@ export class ServiceForHome {
     const params = new HttpParams().set('limit', limit).set('skip', skip);
 
     return this.http
-      .get<productsModel>(
-        'https://dummyjson.com/products/category/womens-dresses',
-        { params }
-      )
+      .get<productsModel>(environment.baseUrl + 'category/womens-dresses', {
+        params,
+      })
       .pipe(
         map((response) => {
           response.products.forEach((el) => (el.amount = 1));
@@ -130,25 +130,43 @@ export class ServiceForHome {
   getFeatured(limit: number, skip: number) {
     const params = new HttpParams().set('limit', limit).set('skip', skip);
 
-    return this.http
-      .get<productsModel>('https://dummyjson.com/products/', { params })
-      .pipe(
-        map((response) => {
-          response.products.forEach((el) => (el.amount = 1));
-          return response;
-        })
-      );
+    return this.http.get<productsModel>(environment.baseUrl, { params }).pipe(
+      map((response) => {
+        const featuredProducts = response.products.map((el) => (el.amount = 1));
+        return response;
+      })
+    );
   }
 
-  getAllProducts(limit: number, skip: number) {
+  getAllProducts(limit: number, skip: number): Observable<boolean> {
     const params = new HttpParams().set('limit', limit).set('skip', skip);
-    return this.http
-      .get<productsModel>('https://dummyjson.com/products/', { params })
-      .pipe(
-        map((response) => {
-          response.products.forEach((el) => (el.amount = 1));
-          return response;
-        })
-      );
+    return this.http.get<productsModel>(environment.baseUrl, { params }).pipe(
+      map((response) => {
+        this.allProducts = response.products.map((el) => {
+          return {
+            ...el,
+            amount: 1,
+          };
+        });
+        return true;
+      })
+    );
   }
+  // getAllProducts(limit: number, skip: number): Observable<ProductCardModel[]> {
+  //   const params = new HttpParams().set('limit', limit).set('skip', skip);
+  //   return this.http
+  //     .get<productsModel>('https://dummyjson.com/products/', { params })
+  //     .pipe(
+  //       map((response) => {
+  //         const products = response.products.map((el) => {
+  //           return {
+  //             ...el,
+  //             amount: 1,
+  //           };
+  //         });
+
+  //         return products;
+  //       })
+  //     );
+  // }
 }

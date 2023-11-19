@@ -15,9 +15,8 @@ export class AppComponent implements OnInit {
     this.wowService.init();
   }
   ngOnInit(): void {
-    this.homeService.getAllProducts(50, 35).subscribe((products) => {
-      this.homeService.allProducts = products.products;
-      this.dataArrive = true;
+    this.homeService.getAllProducts(50, 35).subscribe((bool) => {
+      this.dataArrive = bool;
     });
 
     const storedCart: string | null = localStorage.getItem('inCart');

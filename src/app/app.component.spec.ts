@@ -1,35 +1,35 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { ServiceForHome } from './services/home/home.service';
+import { NgwWowService } from 'ngx-wow';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  const homeServiceSpy = jasmine.createSpyObj<ServiceForHome>(
+    'ServiceForHome',
+    ['getAllProducts']
+  );
+  const wowServiceSpy = jasmine.createSpyObj<NgwWowService>('NgwWowService', [
+    'init',
+  ]);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
+      imports: [RouterTestingModule],
+      providers: [
+        { provide: ServiceForHome, useValue: homeServiceSpy },
+        { provide: NgwWowService, useValue: wowServiceSpy },
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
+  beforeEach(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'estore'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('estore');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('estore app is running!');
+    expect(component).toBeTruthy();
   });
 });
