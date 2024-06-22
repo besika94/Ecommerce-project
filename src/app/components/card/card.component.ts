@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductCardModel } from 'src/app/models/productCard.model';
 import { ServiceForHome } from 'src/app/services/home/home.service';
@@ -12,21 +12,20 @@ export class CardComponent implements OnInit {
   constructor(private homeService: ServiceForHome, private router: Router) {}
 
   ngOnInit(): void {}
+  objectForCard = input.required<ProductCardModel>();
 
-  @Input() objectForCard: ProductCardModel | undefined;
+  list = input<string | undefined>();
 
-  @Input() list: string | undefined;
-
-  favouriteColor: string = 'grey';
+  favouriteColor = signal<string>('grey');
 
   checkFavourite(event: MouseEvent) {
-    switch (this.favouriteColor) {
+    switch (this.favouriteColor()) {
       case 'grey':
-        this.favouriteColor = 'red';
+        this.favouriteColor.set('red');
         break;
 
       case 'red':
-        this.favouriteColor = 'grey';
+        this.favouriteColor.set('grey');
         break;
     }
     event.stopPropagation();

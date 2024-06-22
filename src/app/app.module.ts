@@ -9,7 +9,6 @@ import { CardComponent } from './components/card/card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-import { NgwWowModule } from 'ngx-wow';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartComponent } from './pages/cart/cart.component';
 import { ProductsComponent } from './pages/products/products.component';
@@ -47,7 +46,6 @@ import { RegisterFormComponent } from './components/forms/register-form/register
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    // NgwWowModule,
     NgbModule,
     NgxPaginationModule,
     SwiperModule,

@@ -1,7 +1,8 @@
 <div class="wrapper" style="margin-top: 120px; padding-block: 50px">
-  <app-register-form *ngIf="!displayLoginForm"></app-register-form>
-
-  <div class="form-group" *ngIf="displayLoginForm">
+  @if (!displayLoginForm) {
+  <app-register-form></app-register-form>
+  }@else {
+  <div class="form-group">
     <h2 class="text-center mb-0">Sign in</h2>
     <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
       <label for="email" class="mt-2">Email:</label>
@@ -27,13 +28,10 @@
       </div>
     </form>
   </div>
+  }
+
   <div class="text-center switch-mode-text">
-    <span
-      (click)="
-        switchFromText(
-          switchText === 'Register' ? '/account/register' : '/account/login'
-        )
-      "
+    <span (click)="switchFromText(switchText === 'Register' ? '/account/register' : '/account/login')"
       >Switch to {{ switchText }}</span
     >
   </div>

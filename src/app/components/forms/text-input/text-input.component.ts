@@ -1,4 +1,4 @@
-import { Component, Input, Self } from '@angular/core';
+import { Component, input, Self } from '@angular/core';
 import { ControlValueAccessor, UntypedFormControl, NgControl } from '@angular/forms';
 
 @Component({
@@ -7,8 +7,8 @@ import { ControlValueAccessor, UntypedFormControl, NgControl } from '@angular/fo
   styleUrls: ['./text-input.component.css'],
 })
 export class TextInputComponent implements ControlValueAccessor {
-  @Input() label: string = '';
-  @Input() type: string = 'text';
+  label = input.required<string>();
+  type = input.required<string>();
 
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;

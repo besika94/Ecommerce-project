@@ -1,5 +1,6 @@
 <div class="wrapper" style="margin-top: 140px">
-  <div class="product" *ngIf="singleProduct !== undefined">
+  @if (singleProduct !== undefined) {
+  <div class="product">
     <div class="product-slider">
       <app-slider [slideImages]="singleProduct.images"></app-slider>
     </div>
@@ -10,11 +11,7 @@
       <p class="list-price">{{ singleProduct.price | currency }}</p>
       <span class="list-rating">
         {{ singleProduct.rating }}
-        <ngb-rating
-          style="color: #ff9600"
-          [rate]="singleProduct.rating"
-          [max]="5"
-        ></ngb-rating
+        <ngb-rating style="color: #ff9600" [rate]="singleProduct.rating" [max]="5"></ngb-rating
       ></span>
       <p class="list-description">{{ singleProduct.description }}</p>
       <span class="list-categories">{{ singleProduct.category }}</span>
@@ -36,13 +33,12 @@
       </div>
     </div>
   </div>
+  }
   <hr style="margin: 100px 0" />
-  <div
-    class="similar-products"
-    *ngIf="similarProducts.length"
-    style="margin-bottom: 100px"
-  >
+  @if (similarProducts.length) {
+  <div class="similar-products" style="margin-bottom: 100px">
     <p>Similar Products</p>
     <app-slider [cardSlider]="similarProducts"></app-slider>
   </div>
+  }
 </div>

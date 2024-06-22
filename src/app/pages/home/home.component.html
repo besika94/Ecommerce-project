@@ -3,8 +3,8 @@
     <div class="text">
       <h2>The Best <span style="display: block">Online Store</span></h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.
       </p>
       <button (click)="onStartShopping()">Start Shopping</button>
     </div>
@@ -16,12 +16,14 @@
     <h2 class="best-title">Best sellers</h2>
     <p class="best-sub-title">The best productions from us</p>
     <p class="best-seller-desc">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua.
     </p>
   </div>
   <div class="best-product">
-    <app-card *ngFor="let data of tempData" [objectForCard]="data"></app-card>
+    @for (data of tempData; track data.id) {
+    <app-card [objectForCard]="data"></app-card>
+    }
   </div>
 </section>
 <section class="features">
@@ -48,25 +50,13 @@
 </section>
 <section class="images wow fadeInDown" data-wow-duration="2s">
   <div>
-    <img
-      src="../../../assets/images/blue-bg.webp"
-      alt=" info about saveing"
-      loading="lazy"
-    />
+    <img src="../../../assets/images/blue-bg.webp" alt=" info about saveing" loading="lazy" />
   </div>
   <div>
-    <img
-      src="../../../assets/images/blue-bg-2.webp"
-      alt=" info about saveing"
-      loading="lazy"
-    />
+    <img src="../../../assets/images/blue-bg-2.webp" alt=" info about saveing" loading="lazy" />
   </div>
   <div>
-    <img
-      src="../../../assets/images/blue-bg-3.webp"
-      alt=" info about saveing"
-      loading="lazy"
-    />
+    <img src="../../../assets/images/blue-bg-3.webp" alt=" info about saveing" loading="lazy" />
   </div>
 </section>
 
@@ -74,9 +64,8 @@
   <h2 class="featured-title">Featured Products</h2>
   <h5 class="featured-subtitle">Newest trends from top brands</h5>
   <div class="featured-products">
-    <app-card
-      *ngFor="let featured of featuredProduct"
-      [objectForCard]="featured"
-    ></app-card>
+    @for (featured of featuredProduct; track featured.id) {
+    <app-card [objectForCard]="featured"></app-card>
+    }
   </div>
 </section>

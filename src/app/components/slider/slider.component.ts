@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { SwiperComponent } from 'swiper/angular';
+import { Component, input, OnInit, ViewEncapsulation } from '@angular/core';
 
 // import Swiper core and required modules
 import SwiperCore, { FreeMode, Navigation, Thumbs } from 'swiper';
@@ -16,10 +15,8 @@ SwiperCore.use([FreeMode, Navigation, Thumbs]);
 })
 export class SliderComponent implements OnInit {
   constructor() {}
-
-  @Input() slideImages: Array<string> | undefined;
-
-  @Input() cardSlider: Array<ProductCardModel> | undefined;
+  slideImages = input<Array<string>>();
+  cardSlider = input<Array<ProductCardModel>>();
 
   ngOnInit(): void {}
   thumbsSwiper: any;

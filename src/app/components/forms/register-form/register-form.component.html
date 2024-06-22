@@ -1,17 +1,14 @@
-<form
-  class="form-group"
-  [formGroup]="registerForm"
-  (ngSubmit)="submitForm()"
-  *ngIf="registerForm"
-  autocomplete="on"
->
+@if (registerForm) {
+<form class="form-group" [formGroup]="registerForm" (ngSubmit)="submitForm()" autocomplete="on">
   <h2 class="text-center mb-0">Register</h2>
   <app-text-input
     [formControl]="$any(registerForm.controls['firstName'])"
+    type="text"
     [label]="'First Name'"
   ></app-text-input>
   <app-text-input
     [formControl]="$any(registerForm.controls['lastName'])"
+    type="text"
     [label]="'Last Name'"
   ></app-text-input>
   <app-text-input
@@ -31,15 +28,8 @@
   ></app-text-input>
 
   <div class="text-end mt-3">
-    <button
-      class="btn btn-primary me-2"
-      type="submit"
-      [disabled]="!registerForm.valid"
-    >
-      Register
-    </button>
-    <button class="btn btn-secondary" type="button" (click)="resetForm()">
-      Clear
-    </button>
+    <button class="btn btn-primary me-2" type="submit" [disabled]="!registerForm.valid">Register</button>
+    <button class="btn btn-secondary" type="button" (click)="resetForm()">Clear</button>
   </div>
 </form>
+}

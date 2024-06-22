@@ -6,12 +6,8 @@
       <li routerLink="/products/all" routerLinkActive="active">All Product</li>
       <li routerLink="/products/women" routerLinkActive="active">Women</li>
       <li routerLink="/products/men" routerLinkActive="active">Men</li>
-      <li routerLink="/products/jewellery" routerLinkActive="active">
-        Jewellery
-      </li>
-      <li routerLink="/products/accessories" routerLinkActive="active">
-        Accessories
-      </li>
+      <li routerLink="/products/jewellery" routerLinkActive="active">Jewellery</li>
+      <li routerLink="/products/accessories" routerLinkActive="active">Accessories</li>
     </ul>
     <ul class="mobile-menu">
       <li class="close-icon">
@@ -21,42 +17,30 @@
       <li routerLink="/products/all" routerLinkActive="active">All Product</li>
       <li routerLink="/products/women" routerLinkActive="active">Women</li>
       <li routerLink="/products/men" routerLinkActive="active">Men</li>
-      <li routerLink="/products/jewellery" routerLinkActive="active">
-        Jewellery
-      </li>
-      <li routerLink="/products/accessories" routerLinkActive="active">
-        Accessories
-      </li>
+      <li routerLink="/products/jewellery" routerLinkActive="active">Jewellery</li>
+      <li routerLink="/products/accessories" routerLinkActive="active">Accessories</li>
     </ul>
   </nav>
   <div class="header-icons">
     <ul>
-      <li
-        class="search-container"
-        style="box-shadow: 0 0 2px grey; padding: 2px 4px"
-      >
-        <input
-          class="search-input"
-          type="text"
-          placeholder="Search"
-          #i
-          (keyup)="onSearchInput(i.value)"
-        />
+      <li class="search-container" style="box-shadow: 0 0 2px grey; padding: 2px 4px">
+        <input class="search-input" type="text" placeholder="Search" #i (keyup)="onSearchInput(i.value)" />
         <i class="bi bi-search"></i>
-        <div class="dropdown-results" *ngIf="searchedProduct.length">
-          <span
-            class="searched-prod"
-            *ngFor="let prod of searchedProduct"
-            (click)="onSearchedProduct(prod)"
-            >{{ prod.title }}</span
-          >
+        @if (searchedProduct.length) {
+        <div class="dropdown-results">
+          @for (prod of searchedProduct; track prod.id) {
+          <span class="searched-prod" (click)="onSearchedProduct(prod)">{{ prod.title }}</span>
+          }
         </div>
+        }
       </li>
       <li class="cart-icon" routerLink="/cart">
         <i class="bi bi-cart"></i>
-        <div class="item-numbers" *ngIf="itemsNumberIncart > 0">
+        @if (itemsNumberIncart > 0) {
+        <div class="item-numbers">
           {{ itemsNumberIncart }}
         </div>
+        }
       </li>
       <li class="user-actions">
         <i class="bi bi-person-circle"></i>
