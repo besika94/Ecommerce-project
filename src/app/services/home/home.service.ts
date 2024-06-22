@@ -1,10 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of, Subject, tap } from 'rxjs';
-import {
-  ProductCardModel,
-  productsModel,
-} from 'src/app/models/productCard.model';
+import { map, Observable, Subject } from 'rxjs';
+import { ProductCardModel, productsModel } from 'src/app/models/productCard.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 
@@ -40,16 +37,12 @@ export class ServiceForHome {
     if (category === 'men') {
       return this.getAllProductsArray().filter(
         (product) =>
-          product.category === 'mens-shirts' ||
-          product.category === 'mens-shoes' ||
-          product.category === 'mens-watches'
+          product.category === 'mens-shirts' || product.category === 'mens-shoes' || product.category === 'mens-watches'
       );
     }
 
     if (category === 'accessories') {
-      return this.getAllProductsArray().filter(
-        (product) => product.category === 'sunglasses'
-      );
+      return this.getAllProductsArray().filter((product) => product.category === 'sunglasses');
     }
 
     return this.getAllProductsArray().filter((product) =>
@@ -58,16 +51,13 @@ export class ServiceForHome {
   }
 
   searchProducts(searchRes: string) {
-    return this.getAllProductsArray().filter((p) =>
-      p.title.toLowerCase().includes(searchRes.toLowerCase())
-    );
+    return this.getAllProductsArray().filter((p) => p.title.toLowerCase().includes(searchRes.toLowerCase()));
   }
 
   onDecrease(id: number) {
     const index = this.cartProducts.findIndex((p) => p.id === id);
 
-    if (this.cartProducts[index].amount === 1)
-      this.cartProducts = this.cartProducts.filter((item) => item.id !== id);
+    if (this.cartProducts[index].amount === 1) this.cartProducts = this.cartProducts.filter((item) => item.id !== id);
 
     if (this.cartProducts[index]?.amount > 1) this.cartProducts[index].amount--;
 
@@ -139,9 +129,10 @@ export class ServiceForHome {
   }
 
   getAllProducts(limit: number, skip: number): Observable<boolean> {
-    const params = new HttpParams().set('limit', limit).set('skip', skip);
+    const params = new HttpParams().set('limit', 0).set('skip', 0);
     return this.http.get<productsModel>(environment.baseUrl, { params }).pipe(
       map((response) => {
+        console.log(response);
         this.allProducts = response.products.map((el) => {
           return {
             ...el,
