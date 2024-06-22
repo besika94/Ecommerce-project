@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -15,9 +15,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./register-form.component.css'],
 })
 export class RegisterFormComponent implements OnInit {
-  registerForm: FormGroup | undefined;
+  registerForm: UntypedFormGroup | undefined;
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private _snackBar: MatSnackBar,
     private router: Router
   ) {}
