@@ -9,19 +9,11 @@ import { ServiceForHome } from 'src/app/services/home/home.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent {
   constructor(private homeService: ServiceForHome, private router: Router) {}
 
-  ngOnInit(): void {
-    this.cartProductsupdate = this.homeService.updateCart.subscribe(
-      (products) => {
-        this.dataForCartTable = products;
-      }
-    );
-  }
-
   cartProductsupdate: Subscription | undefined;
-  dataForCartTable: Array<ProductCardModel> = this.homeService.cartProducts;
+  dataForCartTable = this.homeService.cartProducts;
 
   onDec(id: number) {
     this.homeService.onDecrease(id);
@@ -36,11 +28,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onClearCart() {
-    this.homeService.updateCart.next((this.homeService.cartProducts = []));
+    this.homeService.cartProducts.set([]);
     localStorage.removeItem('inCart');
-  }
-
-  ngOnDestroy(): void {
-    this.cartProductsupdate?.unsubscribe();
   }
 }

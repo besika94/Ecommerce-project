@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgwWowService } from 'ngx-wow';
 import { ServiceForHome } from './services/home/home.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,23 +9,20 @@ import { ServiceForHome } from './services/home/home.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private wowService: NgwWowService,
-    private homeService: ServiceForHome
-  ) {
+  title = 'estore';
+  dataArrive$: Observable<boolean> = this.homeService.getAllProducts(50, 35);
+
+  constructor(private wowService: NgwWowService, private homeService: ServiceForHome) {
     this.wowService.init();
   }
   ngOnInit(): void {
-    this.homeService.getAllProducts(50, 35).subscribe((bool) => {
-      this.dataArrive = bool;
-    });
+    this.checkCartItems();
+  }
 
+  checkCartItems() {
     const storedCart: string | null = localStorage.getItem('inCart');
-    if (!this.homeService.cartProducts.length && storedCart) {
-      this.homeService.cartProducts = JSON.parse(storedCart);
-      this.homeService.updateCart.next(this.homeService.cartProducts);
+    if (!this.homeService.cartProducts().length && storedCart) {
+      this.homeService.cartProducts.set(JSON.parse(storedCart));
     }
   }
-  title = 'estore';
-  dataArrive: boolean = false;
 }

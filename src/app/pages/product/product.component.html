@@ -1,32 +1,32 @@
 <div class="wrapper" style="margin-top: 140px">
-  @if (singleProduct !== undefined) {
+  @let product = singleProduct(); @if (product !== undefined) {
   <div class="product">
     <div class="product-slider">
-      <app-slider [slideImages]="singleProduct.images"></app-slider>
+      <app-slider [slideImages]="product.images"></app-slider>
     </div>
     <div class="product-content" style="padding-left: 50px">
       <h2 class="list-title">
-        {{ singleProduct.title }}
+        {{ product.title }}
       </h2>
-      <p class="list-price">{{ singleProduct.price | currency }}</p>
+      <p class="list-price">{{ product.price | currency }}</p>
       <span class="list-rating">
-        {{ singleProduct.rating }}
-        <ngb-rating style="color: #ff9600" [rate]="singleProduct.rating" [max]="5"></ngb-rating
+        {{ product.rating }}
+        <ngb-rating style="color: #ff9600" [rate]="product.rating || 0" [max]="5"></ngb-rating
       ></span>
-      <p class="list-description">{{ singleProduct.description }}</p>
-      <span class="list-categories">{{ singleProduct.category }}</span>
+      <p class="list-description">{{ product.description }}</p>
+      <span class="list-categories">{{ product.category }}</span>
       <div class="amount" style="margin-block: 10px">
         <div style="border-right: 1px solid #eeeeee" (click)="onAmount('-')">
           <i class="bi bi-dash-lg" style="cursor: pointer"></i>
         </div>
 
-        {{ singleProduct.amount }}
+        {{ product.amount }}
         <div style="border-left: 1px solid #eeeeee" (click)="onAmount('+')">
           <i class="bi bi-plus-lg" style="cursor: pointer"></i>
         </div>
       </div>
       <div class="list-buttons">
-        <button (click)="onAddCart(singleProduct)">
+        <button (click)="onAddCart(product)">
           <i class="bi bi-cart-fill"></i>
           <span style="margin-left: 5px">Add To Cart</span>
         </button>
@@ -35,10 +35,10 @@
   </div>
   }
   <hr style="margin: 100px 0" />
-  @if (similarProducts.length) {
+  @if (similarProducts().length) {
   <div class="similar-products" style="margin-bottom: 100px">
     <p>Similar Products</p>
-    <app-slider [cardSlider]="similarProducts"></app-slider>
+    <app-slider [cardSlider]="similarProducts()"></app-slider>
   </div>
   }
 </div>

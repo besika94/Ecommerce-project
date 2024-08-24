@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Subscription } from 'rxjs';
 import { ProductCardModel } from 'src/app/models/productCard.model';
 import { ServiceForHome } from 'src/app/services/home/home.service';
 
@@ -11,66 +10,41 @@ import { ServiceForHome } from 'src/app/services/home/home.service';
   styleUrls: ['./product.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProductComponent implements OnInit, OnDestroy {
-  constructor(
-    private homeService: ServiceForHome,
-    activatedRoute: ActivatedRoute
-  ) {
-    activatedRoute.params.subscribe((params) => {
-      if (!this.singleProduct) {
-        this.singleProduct = this.homeService
-          .getAllProductsArray()
-          .find((p) => +params.id === p.id);
+export class ProductComponent implements OnInit {
+  private homeService = inject(ServiceForHome);
+  private route = inject(ActivatedRoute);
 
-        this.similarProducts = this.homeService
-          .getAllProductsArray()
-          .filter((p) => p.category === this.singleProduct?.category);
+  singleProduct = this.homeService.singleProductView;
+  similarProducts = this.homeService.similarProducts;
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      if (!this.singleProduct()) {
+        this.homeService.singleProductView.set(this.homeService.getAllProductsArray().find((p) => +params.id === p.id));
+        const prd = this.homeService.singleProductView();
+        this.homeService.getSimilarProducts(prd?.category || '');
       }
     });
   }
 
-  ngOnInit(): void {
-    this.singleProductSubscription =
-      this.homeService.updateSingleProductView.subscribe((_singleProduct) => {
-        this.singleProduct = _singleProduct;
-      });
-
-    this.similarProductsSubscription =
-      this.homeService.updateSimilarProducts.subscribe((_similarProduct) => {
-        this.similarProducts = _similarProduct;
-      });
-  }
-  singleProduct: ProductCardModel | undefined =
-    this.homeService.singleProductView;
-
-  similarProducts: Array<ProductCardModel> = this.homeService.similarProducts;
-  similarProductsSubscription: Subscription | undefined;
-  singleProductSubscription: Subscription | undefined;
-
   getSimilarProducts(category: string) {
-    this.similarProducts = this.homeService.getProductsByCategory(category);
+    this.homeService.getProductsByCategory(category);
   }
 
   onAmount(upOrDown: string) {
+    const singleProductview = this.singleProduct();
     switch (upOrDown) {
       case '+':
-        this.singleProduct !== undefined ? this.singleProduct.amount++ : '';
+        singleProductview !== undefined ? singleProductview.amount++ : '';
         break;
 
       case '-':
-        this.singleProduct !== undefined && this.singleProduct.amount !== 1
-          ? this.singleProduct.amount--
-          : '';
+        singleProductview !== undefined && singleProductview?.amount !== 1 ? singleProductview.amount-- : '';
         break;
     }
   }
 
   onAddCart(cartObject: ProductCardModel) {
     this.homeService.onAddCart(cartObject);
-  }
-
-  ngOnDestroy(): void {
-    this.singleProductSubscription?.unsubscribe();
-    this.similarProductsSubscription?.unsubscribe();
   }
 }

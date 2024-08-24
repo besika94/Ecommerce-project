@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
 import { ProductCardModel, productsModel } from 'src/app/models/productCard.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,25 +12,22 @@ export class ServiceForHome {
   constructor(private http: HttpClient, private _snackBar: MatSnackBar) {}
 
   // watch products added to cart
-  updateCart = new Subject<Array<ProductCardModel>>();
-  cartProducts: Array<ProductCardModel> = [];
+  cartProducts = signal<Array<ProductCardModel>>([]);
 
   // watch single product view
   updateSingleProductView = new Subject<ProductCardModel>();
-  singleProductView: ProductCardModel | undefined;
+  singleProductView = signal<ProductCardModel | undefined>(undefined);
 
-  allProducts: Array<ProductCardModel> = [];
+  allProducts = signal<Array<ProductCardModel>>([]);
 
-  updateSimilarProducts = new Subject<Array<ProductCardModel>>();
-  similarProducts: Array<ProductCardModel> = [];
+  similarProducts = signal<Array<ProductCardModel>>([]);
 
   getSimilarProducts(category: string) {
-    this.similarProducts = this.getProductsByCategory(category);
-    this.updateSimilarProducts.next(this.similarProducts);
+    this.similarProducts.set(this.getProductsByCategory(category));
   }
 
   getAllProductsArray() {
-    return this.allProducts.slice();
+    return this.allProducts().slice();
   }
 
   getProductsByCategory(category: string) {
@@ -55,26 +52,32 @@ export class ServiceForHome {
   }
 
   onDecrease(id: number) {
-    const index = this.cartProducts.findIndex((p) => p.id === id);
+    const index = this.cartProducts().findIndex((p) => p.id === id);
 
-    if (this.cartProducts[index].amount === 1) this.cartProducts = this.cartProducts.filter((item) => item.id !== id);
+    if (this.cartProducts()[index].amount === 1) {
+      this.cartProducts.update((i) => i.filter((item) => item.id !== id));
+    } else if (this.cartProducts()[index]?.amount > 1) {
+      this.cartProducts.update((p) => {
+        p[index].amount--;
+        return p;
+      });
+    }
 
-    if (this.cartProducts[index]?.amount > 1) this.cartProducts[index].amount--;
-
-    this.storeCartProductLocaly(this.cartProducts);
-    this.updateCart.next(this.cartProducts);
+    this.storeCartProductLocaly(this.cartProducts());
   }
 
   onIncrease(id: number) {
-    const index = this.cartProducts.findIndex((p) => p.id === id);
+    const index = this.cartProducts().findIndex((p) => p.id === id);
 
-    this.cartProducts[index].amount++;
-    this.storeCartProductLocaly(this.cartProducts);
-    this.updateCart.next(this.cartProducts);
+    this.cartProducts.update((p) => {
+      p[index].amount++;
+      return p;
+    });
+    this.storeCartProductLocaly(this.cartProducts());
   }
 
   onAddCart(cartObject: ProductCardModel) {
-    const items = this.cartProducts.slice();
+    const items = this.cartProducts().slice();
 
     // check if object alredy existed
     const itemInCart = items.find((_item) => _item.id === cartObject.id);
@@ -84,9 +87,8 @@ export class ServiceForHome {
         duration: 3000,
       });
 
-    this.cartProducts.push(cartObject);
-    this.storeCartProductLocaly(this.cartProducts);
-    this.updateCart.next(this.cartProducts);
+    this.cartProducts.set([...items, cartObject]);
+    this.storeCartProductLocaly(this.cartProducts());
     return this._snackBar.open('item successfully added to cart', 'ok', {
       duration: 2000,
     });
@@ -97,9 +99,8 @@ export class ServiceForHome {
   }
 
   onSingleProduct(singleProductObject: ProductCardModel) {
-    this.singleProductView = singleProductObject;
+    this.singleProductView.set(singleProductObject);
     this.getSimilarProducts(singleProductObject.category);
-    this.updateSingleProductView.next(this.singleProductView);
   }
 
   getBestSellers(limit: number, skip: number) {
@@ -131,33 +132,10 @@ export class ServiceForHome {
   getAllProducts(limit: number, skip: number): Observable<boolean> {
     const params = new HttpParams().set('limit', 0).set('skip', 0);
     return this.http.get<productsModel>(environment.baseUrl, { params }).pipe(
-      map((response) => {
-        console.log(response);
-        this.allProducts = response.products.map((el) => {
-          return {
-            ...el,
-            amount: 1,
-          };
-        });
+      map((r) => {
+        this.allProducts.set(r.products.map((el) => ({ ...el, amount: 1 })));
         return true;
       })
     );
   }
-  // getAllProducts(limit: number, skip: number): Observable<ProductCardModel[]> {
-  //   const params = new HttpParams().set('limit', limit).set('skip', skip);
-  //   return this.http
-  //     .get<productsModel>('https://dummyjson.com/products/', { params })
-  //     .pipe(
-  //       map((response) => {
-  //         const products = response.products.map((el) => {
-  //           return {
-  //             ...el,
-  //             amount: 1,
-  //           };
-  //         });
-
-  //         return products;
-  //       })
-  //     );
-  // }
 }

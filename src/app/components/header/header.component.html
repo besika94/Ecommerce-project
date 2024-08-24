@@ -26,9 +26,9 @@
       <li class="search-container" style="box-shadow: 0 0 2px grey; padding: 2px 4px">
         <input class="search-input" type="text" placeholder="Search" #i (keyup)="onSearchInput(i.value)" />
         <i class="bi bi-search"></i>
-        @if (searchedProduct.length) {
+        @if (searchedProduct().length) {
         <div class="dropdown-results">
-          @for (prod of searchedProduct; track prod.id) {
+          @for (prod of searchedProduct(); track prod.id) {
           <span class="searched-prod" (click)="onSearchedProduct(prod)">{{ prod.title }}</span>
           }
         </div>
@@ -36,9 +36,9 @@
       </li>
       <li class="cart-icon" routerLink="/cart">
         <i class="bi bi-cart"></i>
-        @if (itemsNumberIncart > 0) {
+        @if (itemsNumberIncart() > 0) {
         <div class="item-numbers">
-          {{ itemsNumberIncart }}
+          {{ itemsNumberIncart() }}
         </div>
         }
       </li>
