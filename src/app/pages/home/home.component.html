@@ -21,9 +21,10 @@
     </p>
   </div>
   <div class="best-product">
-    @for (data of tempData; track data.id) {
+    @let bestSellers = bestSellers$ | async; @if(bestSellers && bestSellers.products) { @for (data of
+    bestSellers.products; track data.id) {
     <app-card [objectForCard]="data"></app-card>
-    }
+    } }
   </div>
 </section>
 <section class="features">
@@ -63,9 +64,11 @@
 <section class="featured wow fadeInDown" data-wow-duration="2s">
   <h2 class="featured-title">Featured Products</h2>
   <h5 class="featured-subtitle">Newest trends from top brands</h5>
+  @let featuredProducts = featuredProduct$ | async; @if(featuredProducts && featuredProducts.products) {
   <div class="featured-products">
-    @for (featured of featuredProduct; track featured.id) {
+    @for (featured of featuredProducts.products; track featured.id) {
     <app-card [objectForCard]="featured"></app-card>
     }
   </div>
+  }
 </section>

@@ -1,4 +1,4 @@
-@if (!dataArrive) {
+@let dataArrive = dataArrive$ | async; @if (!dataArrive) {
 <div class="loading-image"></div>
 }@else{
 <div class="all-content">
