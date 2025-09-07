@@ -1,0 +1,4 @@
+User-agent: *
+Allow:/home
+Disallow: /
+Sitemap: https://ecommers-pro.netlify.app/sitemap.xml
