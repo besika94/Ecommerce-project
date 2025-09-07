@@ -11,8 +11,10 @@
       <p class="list-price">{{ product.price | currency }}</p>
       <span class="list-rating">
         {{ product.rating }}
-        <ngb-rating style="color: #ff9600" [rate]="product.rating || 0" [max]="5"></ngb-rating
-      ></span>
+        <span style="color: #ff9600; margin-left: 5px;">
+          ★★★★★
+        </span>
+      </span>
       <p class="list-description">{{ product.description }}</p>
       <span class="list-categories">{{ product.category }}</span>
       <div class="amount" style="margin-block: 10px">
@@ -26,7 +28,7 @@
         </div>
       </div>
       <div class="list-buttons">
-        <button (click)="onAddCart(product)">
+        <button (click)="onAddToCart(product)">
           <i class="bi bi-cart-fill"></i>
           <span style="margin-left: 5px">Add To Cart</span>
         </button>

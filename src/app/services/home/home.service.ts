@@ -94,6 +94,14 @@ export class ServiceForHome {
     });
   }
 
+  onRemoveProduct(id: number) {
+    this.cartProducts.update((items) => items.filter((item) => item.id !== id));
+    this.storeCartProductLocaly(this.cartProducts());
+    this._snackBar.open('Item removed from cart', 'ok', {
+      duration: 2000,
+    });
+  }
+
   storeCartProductLocaly(arr: ProductCardModel[]): void {
     localStorage.setItem('inCart', JSON.stringify(arr));
   }

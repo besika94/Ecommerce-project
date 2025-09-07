@@ -1,0 +1,6 @@
+.prod-amount {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 1rem;
+}

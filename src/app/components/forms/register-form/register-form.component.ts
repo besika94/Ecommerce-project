@@ -1,18 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   UntypedFormBuilder,
   UntypedFormGroup,
   ValidatorFn,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { TextInputComponent } from '../text-input/text-input.component';
 
 @Component({
   selector: 'app-register-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, TextInputComponent],
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterFormComponent implements OnInit {
   registerForm: UntypedFormGroup | undefined;
@@ -46,9 +52,7 @@ export class RegisterFormComponent implements OnInit {
 
   matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
-      return control.value === control.parent?.get(matchTo)?.value
-        ? null
-        : { notMatching: true };
+      return control?.value === control?.parent?.get(matchTo)?.value ? null : { isMatching: true };
     };
   }
 
