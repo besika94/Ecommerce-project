@@ -1,13 +1,16 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ProductCardModel } from 'src/app/models/productCard.model';
 import { ServiceForHome } from 'src/app/services/home/home.service';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
   private homeService = inject(ServiceForHome);

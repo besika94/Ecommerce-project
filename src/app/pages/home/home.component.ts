@@ -1,13 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { productsModel } from 'src/app/models/productCard.model';
 import { ServiceForHome } from 'src/app/services/home/home.service';
+import { CardComponent } from 'src/app/components/card/card.component';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, CardComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
   private homeService = inject(ServiceForHome);

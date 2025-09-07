@@ -5,35 +5,36 @@
   >
     <div class="prod-amount" style="display: flex; align-items: center">
       <span>Items per page:</span>
-      <ng-select
-        style="width: 60px; margin-left: 10px"
-        [items]="defaultBindingsList"
-        [clearable]="false"
-        [(ngModel)]="selectedAmount"
-      >
-      </ng-select>
+      <mat-select [(ngModel)]="selectedAmount">
+        @for (productNumber of defaultBindingsList; track productNumber) {
+          <mat-option [value]="productNumber">{{ productNumber }}</mat-option>
+        }
+      </mat-select>
     </div>
     <div class="prod-sort" style="display: flex; align-items: center">
       <span>Sort by:</span>
-      <ng-select
-        style="width: 150px; margin-left: 10px"
-        [items]="sortBy"
-        [clearable]="false"
-        [(ngModel)]="selectedSort"
-        (change)="onSortSelect()"
-      >
-      </ng-select>
+      <!--      <ng-select
+              style="width: 150px; margin-left: 10px"
+              [items]="sortBy"
+              [clearable]="false"
+              [(ngModel)]="selectedSort"
+              (change)="onSortSelect()"
+            >
+            </ng-select>-->
     </div>
   </div>
   @if (productsArray.length) {
-  <div class="display-products">
-    @for (product of productsArray | paginate: { itemsPerPage: selectedAmount, currentPage: page }; track product.id) {
-    <app-card [objectForCard]="product" [list]="'list'"></app-card>
-    }
+    <div class="display-products">
+      @for (product of productsArray() | paginate: {
+        itemsPerPage: selectedAmount,
+        currentPage: page
+      }; track product.id) {
+        <app-card [objectForCard]="product" [list]="'list'" />
+      }
 
-    <div style="text-align: center; margin-top: 1rem">
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      <div style="text-align: center; margin-top: 1rem">
+        <pagination-controls (pageChange)="page = $event" />
+      </div>
     </div>
-  </div>
   }
 </div>

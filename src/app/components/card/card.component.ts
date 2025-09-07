@@ -1,12 +1,16 @@
-import { Component, input, Input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ProductCardModel } from 'src/app/models/productCard.model';
 import { ServiceForHome } from 'src/app/services/home/home.service';
 
 @Component({
   selector: 'app-card',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent implements OnInit {
   constructor(private homeService: ServiceForHome, private router: Router) {}

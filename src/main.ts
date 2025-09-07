@@ -1,12 +1,22 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { importProvidersFrom, provideZonelessChangeDetection } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import { AppComponent } from './app/app.component';
+import { routes } from './app/routes';
+import { providePrimeNG } from 'primeng/config';
 
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideZonelessChangeDetection(),
+    provideRouter(routes),
+    provideHttpClient(),
+    importProvidersFrom(FormsModule, ReactiveFormsModule, MatSnackBarModule),
+    providePrimeNG({
+      ripple: true,
+    }),
+  ],
+}).catch((err) => console.error(err));

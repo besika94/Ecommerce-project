@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RegisterFormComponent } from 'src/app/components/forms/register-form/register-form.component';
 
 @Component({
   selector: 'app-auth',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RegisterFormComponent],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthComponent implements OnInit {
   displayLoginForm: boolean = true;
@@ -34,10 +40,10 @@ export class AuthComponent implements OnInit {
   switchForms(type: string) {
     if (type === 'login') {
       this.displayLoginForm = true;
-      this.switchText = 'Register';
+      this.switchText = "Don't have an account? "
     } else {
       this.displayLoginForm = false;
-      this.switchText = 'Sign in';
+      this.switchText = 'Already have an account? ';
     }
   }
 }

@@ -18,8 +18,10 @@
     <p>{{ objectForCard().price | currency }}</p>
     <span>
       {{ objectForCard().rating }}
-      <ngb-rating style="color: #ff9600" [rate]="objectForCard().rating" [max]="5"></ngb-rating
-    ></span>
+      <span style="color: #ff9600; margin-left: 5px;">
+        ★★★★★
+      </span>
+    </span>
   </div>
 </div>
 }@else if (objectForCard() && list() === 'list') {
@@ -40,8 +42,10 @@
     <p class="list-price">{{ objectForCard().price | currency }}</p>
     <span class="list-rating">
       {{ objectForCard().rating }}
-      <ngb-rating style="color: #ff9600" [rate]="objectForCard().rating" [max]="5"></ngb-rating
-    ></span>
+      <span style="color: #ff9600; margin-left: 5px;">
+        ★★★★★
+      </span>
+    </span>
     <p class="list-description">{{ objectForCard().description }}</p>
     <span class="list-categories">{{ objectForCard().category }}</span>
     <div class="list-buttons">

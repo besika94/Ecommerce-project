@@ -1,16 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { ProductCardModel } from 'src/app/models/productCard.model';
 import { ServiceForHome } from 'src/app/services/home/home.service';
 
 @Component({
   selector: 'app-cart',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent {
-  constructor(private homeService: ServiceForHome, private router: Router) {}
+  constructor(
+    private homeService: ServiceForHome,
+    private router: Router,
+  ) {}
 
   cartProductsupdate: Subscription | undefined;
   dataForCartTable = this.homeService.cartProducts;

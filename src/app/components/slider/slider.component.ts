@@ -1,14 +1,11 @@
 import { Component, input, OnInit, ViewEncapsulation } from '@angular/core';
-
-// import Swiper core and required modules
-import SwiperCore, { FreeMode, Navigation, Thumbs } from 'swiper';
+import { CommonModule } from '@angular/common';
 import { ProductCardModel } from 'src/app/models/productCard.model';
-
-// install Swiper modules
-SwiperCore.use([FreeMode, Navigation, Thumbs]);
 
 @Component({
   selector: 'app-slider',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css'],
   encapsulation: ViewEncapsulation.None,
